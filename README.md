@@ -1,4 +1,5 @@
-For more detail see the supporting blog post at:
+For more detail see the supporting blog post at:<br>
+
 https://vmkdaily.ghost.io/using-powershell-and-ovftool-to-deploy-vcenter-server-appliance-on-esxi/
 
 The following is the current cmdlet help:
