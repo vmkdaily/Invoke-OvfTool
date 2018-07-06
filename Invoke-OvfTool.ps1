@@ -1,4 +1,4 @@
-﻿#Requires -Version 3
+#Requires -Version 3
 
 Function Invoke-OvfTool {
 
@@ -40,7 +40,7 @@ Function Invoke-OvfTool {
 	
         .PARAMETER Path
           String. The path to the win32 directory of the extracted vCenter Server installation ISO.
-          By default we expect "$env:USERPROFILE\Downloads\VMware-VCSA-all-6.7.0-8217866\vcsa-cli-installer\win32"
+          By default we expect "$env:USERPROFILE\Downloads\VMware-VCSA-all-6.7.0-8832884\vcsa-cli-installer\win32"
 
         .PARAMETER OvfConfig
           PSObject. A hashtable containing the deployment options for a new vCenter Server appliance. See the help for details on creating and using a variable for this purpose.
@@ -51,7 +51,7 @@ Function Invoke-OvfTool {
         .PARAMETER TemplatePath
           String. Path to the JSON file to model after. This would be the example file provided by VMware or one that you customized previously to become your master.
           We assume no previous work was done and we use the template from VMware and modify as needed.
-          The default is "$env:USERPROFILE\Downloads\VMware-VCSA-all-6.7.0-8217866\vcsa-cli-installer\templates\install\embedded_vCSA_on_ESXi.json".
+          The default is "$env:USERPROFILE\Downloads\VMware-VCSA-all-6.7.0-8832884\vcsa-cli-installer\templates\install\embedded_vCSA_on_ESXi.json".
 
         .PARAMETER OutputPath
           String. The full path to the JSON configuration file to create. If the file exists, we overwrite it.
@@ -90,20 +90,23 @@ Function Invoke-OvfTool {
           Dns                    = "10.100.1.10"
           SubnetLength           = "24"
           Gateway                = "10.100.1.1"
-          VcRootPassword         = "VMware123!"
+          VcRootPassword         = "VMware123!!!"
           VcNtp                  = "0.pool.ntp.org, 1.pool.ntp.org,2.pool.ntp.org,3.pool.ntp.org"
           SshEnabled             = $true
-          ssoPassword            = "VMware123!"
+          ssoPassword            = "VMware123!!!"
           ssoDomainName          = "vsphere.local"
           ceipEnabled            = $false
         }
 
+	Note: Passwords must be complex.
+	
         This example created a PowerShell object to hold the desired deployment options.
         Please note that some values are case sensitive (i.e. datastore).
         
         .EXAMPLE
         $Json = Invoke-OvfTool -OvfConfig $OvfConfig -Mode Design
-        Invoke-OvfTool -OvfConfig $OvfConfig -Mode Deploy -JsonPath $Json
+        $Json  | fl *  #observe output and get the path
+	Invoke-OvfTool -OvfConfig $OvfConfig -Mode Deploy -JsonPath <path-to-your-json-file>
 
         This example creates a variable pointing to a default VMware JSON configuration.
         We then overlay our settings at deploy time using the $OvfConfig variable we created previously.
